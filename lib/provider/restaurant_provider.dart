@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 enum ResultState { Loading, NoData, HasData, Error }
 
-class DataProvider extends ChangeNotifier {
+class RestaurantProvider extends ChangeNotifier {
   final ApiService apiService;
 
-  DataProvider({required this.apiService}) {
+  RestaurantProvider({required this.apiService}) {
     _fetchAllArticle();
   }
 
@@ -27,7 +27,7 @@ class DataProvider extends ChangeNotifier {
     try {
       _state = ResultState.Loading;
       notifyListeners();
-      final restaurant = await apiService.topHeadlines();
+      final restaurant = await apiService.restaurantData();
       if (restaurant.restaurants.isEmpty) {
         _state = ResultState.NoData;
         notifyListeners();
@@ -40,7 +40,7 @@ class DataProvider extends ChangeNotifier {
     } catch (e) {
       _state = ResultState.Error;
       notifyListeners();
-      return _message = 'Error --> $e';
+      return _message = 'Check your internet connection, Dicoding restaurant needs to be online';
     }
   }
 }

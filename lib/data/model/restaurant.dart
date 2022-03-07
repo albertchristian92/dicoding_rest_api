@@ -17,9 +17,26 @@ class RestaurantsResult {
     error: json["error"],
     message: json["message"],
     count: json["count"],
-    restaurants: List<Restaurant>.from(json["restaurants"].map((x) => Restaurant.fromJson(x))),
+    restaurants: List<Restaurant>.from(
+        (json["restaurants"] as List)
+            .map((x) => Restaurant.fromJson(x))
+            .where((restaurant) =>
+                restaurant.id != null &&
+                restaurant.name != null &&
+                restaurant.description != null &&
+                restaurant.pictureId != null &&
+                restaurant.city != null &&
+                restaurant.rating != null
+        )),
   );
 
+
+  Map<String, dynamic> toJson() => {
+    "error": error,
+    "message": message,
+    "count": count,
+    "restaurants": List<dynamic>.from(restaurants.map((x) => x.toJson())),
+  };
 }
 
 class Restaurant {
