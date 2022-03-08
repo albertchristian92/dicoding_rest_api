@@ -9,7 +9,6 @@ import 'package:dicoding_rest_api/ui/home_page/today_special.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home_page';
-
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -117,29 +116,11 @@ class _HomePageState extends State<HomePage> {
                     ],
                   )
               ),
-              SingleChildScrollView(
-                padding: EdgeInsets.only(bottom: 20),
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                    children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height * 2 / 6,
-                        child: ChangeNotifierProvider<RestaurantProvider>(
-                          create: (_) => RestaurantProvider(apiService: ApiService()),
-                          child: Row(
-                              children: [
-                                TodaySpecial(),
-                            ]
-                          )
-                        ),
-
-                      ),
-                    ]
-                )
-              )
             ],
         ),
         )
         ));
   }
 }
+
+
