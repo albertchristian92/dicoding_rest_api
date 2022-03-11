@@ -19,7 +19,7 @@ class ErrorInformation extends StatelessWidget {
         ),
         SizedBox(height: 12),
         Text(
-          'Slow or No Internet Connections',
+          'Slow or No Internet Connections woe',
           style: TextStyle(fontFamily: 'Open Sans', fontSize: 13),
         ),
         SizedBox(height: 6),

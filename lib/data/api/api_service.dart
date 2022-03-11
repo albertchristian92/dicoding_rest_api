@@ -10,8 +10,10 @@ class ApiService {
     final response = await http.get(Uri.parse(_baseUrl + 'list'));
 
     if (response.statusCode == 200) {
+      print('aaa');
       return Welcome.fromJson(json.decode(response.body));
     } else {
+      print('bbbb');
       throw Exception('Failed to load Restaurant List');
     }
   }
@@ -20,8 +22,10 @@ class ApiService {
     final response = await http.get(Uri.parse(_baseUrl + 'detail/' + id));
 
     if (response.statusCode == 200) {
+      print('aabvua');
       return Detail.fromJson(json.decode(response.body));
     } else {
+      print('aaasuu');
       throw Exception('Failed to load Restaurant Detail');
     }
   }
