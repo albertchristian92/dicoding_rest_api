@@ -6,42 +6,43 @@ import 'package:flutter/material.dart';
 
 enum ResultState { Loading, NoData, HasData, Error }
 
-class RestaurantDetailProvider extends ChangeNotifier {
+class DetailRestaurantProvider extends ChangeNotifier {
   final ApiService apiService;
-  final String id;
+  final String restaurantId;
 
-  RestaurantDetailProvider({required this.apiService, required this.id}) {
-    _fetchAllArticle(id);
+  DetailRestaurantProvider(
+      {required this.apiService, required this.restaurantId}) {
+    _fetchDetailRestaurant(restaurantId);
   }
 
-  late RestaurantDetail _detailResult;
+  late Detail _restaurantResult;
   late ResultState _state;
   String _message = '';
 
   String get message => _message;
 
-  RestaurantDetail get result => _detailResult;
+  Detail get result => _restaurantResult;
 
   ResultState get state => _state;
 
-  Future<dynamic> _fetchAllArticle(id) async {
+  Future<dynamic> _fetchDetailRestaurant(String id) async {
     try {
       _state = ResultState.Loading;
       notifyListeners();
-      final restaurant = await apiService.listdetail(id);
-      if (restaurant.restaurant.id.isEmpty) {
+      final restaurants = await apiService.detailRestaurant(id);
+      if (restaurants.restaurant == null) {
         _state = ResultState.NoData;
         notifyListeners();
-        return _message = 'Empty Restaurant Detail Data';
+        return _message = 'Empty Data';
       } else {
         _state = ResultState.HasData;
         notifyListeners();
-        return _detailResult = restaurant;
+        return _restaurantResult = restaurants;
       }
     } catch (e) {
       _state = ResultState.Error;
       notifyListeners();
-      return _message = 'Check your internet connection, Dicoding restaurant needs to be online';
+      return _message = 'Error --> $e';
     }
   }
 }

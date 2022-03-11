@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dicoding_rest_api/provider/restaurant_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:dicoding_rest_api/widgets/error_information.dart';
+import 'package:dicoding_rest_api/ui/widgets/error_information.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:dicoding_rest_api/common/common.dart';
 import 'package:flutter/widgets.dart';

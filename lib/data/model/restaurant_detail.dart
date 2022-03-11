@@ -1,31 +1,23 @@
 import 'dart:convert';
 
-RestaurantDetail restaurantDetailFromJson(String str) => RestaurantDetail.fromJson(json.decode(str));
+Detail detailFromJson(String str) => Detail.fromJson(json.decode(str));
 
-String restaurantDetailToJson(RestaurantDetail data) => json.encode(data.toJson());
-
-class RestaurantDetail {
-  RestaurantDetail({
+class Detail {
+  Detail({
     required this.error,
     required this.message,
     required this.restaurant,
   });
 
-  bool error;
-  String message;
-  Restaurant restaurant;
+  late bool error;
+  late String message;
+  late Restaurant restaurant;
 
-  factory RestaurantDetail.fromJson(Map<String, dynamic> json) => RestaurantDetail(
+  factory Detail.fromJson(Map<String, dynamic> json) => Detail(
     error: json["error"],
     message: json["message"],
     restaurant: Restaurant.fromJson(json["restaurant"]),
   );
-
-  Map<String, dynamic> toJson() => {
-    "error": error,
-    "message": message,
-    "restaurant": restaurant.toJson(),
-  };
 }
 
 class Restaurant {
@@ -36,22 +28,22 @@ class Restaurant {
     required this.city,
     required this.address,
     required this.pictureId,
-    required this.rating,
     required this.categories,
     required this.menus,
+    required this.rating,
     required this.customerReviews,
   });
 
-  String id;
-  String name;
-  String description;
-  String city;
-  String address;
-  String pictureId;
-  double rating;
-  List<Category> categories;
-  Menus menus;
-  List<CustomerReview> customerReviews;
+  late String id;
+  late String name;
+  late String description;
+  late String city;
+  late String address;
+  late String pictureId;
+  late List<Category> categories;
+  late Menus menus;
+  late double rating;
+  late List<CustomerReview> customerReviews;
 
   factory Restaurant.fromJson(Map<String, dynamic> json) => Restaurant(
     id: json["id"],
@@ -60,24 +52,14 @@ class Restaurant {
     city: json["city"],
     address: json["address"],
     pictureId: json["pictureId"],
-    rating: json["rating"].toDouble(),
-    categories: List<Category>.from(json["categories"].map((x) => Category.fromJson(x))),
+    categories: List<Category>.from(
+        json["categories"].map((x) => Category.fromJson(x))),
     menus: Menus.fromJson(json["menus"]),
-    customerReviews: List<CustomerReview>.from(json["customerReviews"].map((x) => CustomerReview.fromJson(x))),
+    rating: json["rating"].toDouble(),
+    customerReviews: List<CustomerReview>.from(
+        json["customerReviews"].map((x) => CustomerReview.fromJson(x))),
   );
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "description": description,
-    "city": city,
-    "address": address,
-    "pictureId": pictureId,
-    "rating": rating,
-    "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
-    "menus": menus.toJson(),
-    "customerReviews": List<dynamic>.from(customerReviews.map((x) => x.toJson())),
-  };
 }
 
 class Category {
@@ -85,7 +67,7 @@ class Category {
     required this.name,
   });
 
-  String name;
+  late String name;
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
     name: json["name"],
@@ -103,22 +85,23 @@ class CustomerReview {
     required this.date,
   });
 
-  String name;
-  String review;
-  String date;
+  late String name;
+  late String review;
+  late Date? date;
 
   factory CustomerReview.fromJson(Map<String, dynamic> json) => CustomerReview(
     name: json["name"],
     review: json["review"],
-    date: json["date"],
+    date: dateValues.map[json["date"]],
   );
-
-  Map<String, dynamic> toJson() => {
-    "name": name,
-    "review": review,
-    "date": date,
-  };
 }
+
+enum Date { THE_13_NOVEMBER_2019, THE_23_AGUSTUS_2021 }
+
+final dateValues = EnumValues({
+  "13 November 2019": Date.THE_13_NOVEMBER_2019,
+  "23 Agustus 2021": Date.THE_23_AGUSTUS_2021
+});
 
 class Menus {
   Menus({
@@ -126,16 +109,28 @@ class Menus {
     required this.drinks,
   });
 
-  List<Category> foods;
-  List<Category> drinks;
+  late List<Category> foods;
+  late List<Category> drinks;
 
   factory Menus.fromJson(Map<String, dynamic> json) => Menus(
-    foods: List<Category>.from(json["foods"].map((x) => Category.fromJson(x))),
-    drinks: List<Category>.from(json["drinks"].map((x) => Category.fromJson(x))),
+    foods:
+    List<Category>.from(json["foods"].map((x) => Category.fromJson(x))),
+    drinks: List<Category>.from(
+        json["drinks"].map((x) => Category.fromJson(x))),
   );
 
-  Map<String, dynamic> toJson() => {
-    "foods": List<dynamic>.from(foods.map((x) => x.toJson())),
-    "drinks": List<dynamic>.from(drinks.map((x) => x.toJson())),
-  };
+}
+
+class EnumValues<T> {
+  late Map<String, T> map;
+  late Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    if (reverseMap == null) {
+      reverseMap = map.map((k, v) => new MapEntry(v, k));
+    }
+    return reverseMap;
+  }
 }

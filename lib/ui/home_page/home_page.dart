@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:dicoding_rest_api/provider/restaurant_provider.dart';
 import 'package:dicoding_rest_api/data/api/api_service.dart';
 import 'package:dicoding_rest_api/ui/home_page/today_special.dart';
+// import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+// import 'package:dicoding_rest_api/common/common.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home_page';
@@ -116,6 +118,15 @@ class _HomePageState extends State<HomePage> {
                     ],
                   )
               ),
+              SizedBox(
+                height: 6,
+              ),
+          Container(
+            child: ChangeNotifierProvider<RestaurantProvider>(
+              create: (_) => RestaurantProvider(apiService: ApiService()),
+              child: TodaySpecial(),
+            ),
+          ),
             ],
         ),
         )
