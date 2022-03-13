@@ -16,7 +16,7 @@ class TodaySpecial extends StatelessWidget{
         return Center(child: CircularProgressIndicator());
       } else if (state.state == ResultState.HasData)
       {
-        var dataRestaurant = state.result.restaurants[index];
+        // var dataRestaurant = state.result.restaurants[index];
         StaggeredGrid.count(
             crossAxisCount: 4,
             mainAxisSpacing: 4,
@@ -25,7 +25,7 @@ class TodaySpecial extends StatelessWidget{
               StaggeredGridTile.count(
                 crossAxisCellCount: 2,
                 mainAxisCellCount: 2,
-                child: SpecialCard(restaurant: dataRestaurant)
+                child: Tile(index: 1),
               ),
               StaggeredGridTile.count(
                 crossAxisCellCount: 2,

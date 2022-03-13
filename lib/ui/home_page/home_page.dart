@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dicoding_rest_api/ui/home_page/popular_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -123,9 +124,10 @@ class _HomePageState extends State<HomePage> {
                 height: 6,
               ),
           Container(
+            height: MediaQuery.of(context).size.height * 2 / 6,
             child: ChangeNotifierProvider<RestaurantProvider>(
               create: (_) => RestaurantProvider(apiService: ApiService()),
-              child: TodaySpecial(),
+              child: PopularList(),
             ),
           ),
             ],
